@@ -7,7 +7,7 @@
     style="@style/ScreenBackground"
     tools:context=".MainActivity">
 
-    <!-- Username text field -->
+    <!-- Username text view -->
     <TextView
         android:id="@+id/textViewUsername"
         android:layout_width="wrap_content"
@@ -50,7 +50,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextWidth"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:nextFocusDown="@+id/editTextLength"
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Length text field -->
@@ -73,7 +76,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextLength"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:nextFocusDown="@+id/editTextHeight"
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Height text field -->
@@ -96,7 +102,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextHeight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Reset buttons -->
@@ -108,12 +116,12 @@
         style="@style/ScreenBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="120dp"
         android:enabled="false"
         android:text="@string/create_button"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextHeightLayout"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/editTextHeightLayout"
         app:layout_constraintTop_toBottomOf="@+id/editTextHeightLayout" />
 
@@ -121,24 +129,39 @@
         android:id="@+id/shareButton"
         android:layout_width="@+id/viewButton"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
         android:text="@string/share_button"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/viewButton"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/viewButton"
+        app:layout_constraintTop_toBottomOf="@+id/viewButton" />
+
+    <Button
+        android:id="@+id/viewButton"
+        android:layout_width="@+id/createButton"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        android:text="@string/view_button"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/createButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/createButton"
         app:layout_constraintTop_toBottomOf="@+id/createButton" />
 
     <Button
         android:id="@+id/clearAllButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:height="50dp"
         android:enabled="false"
         android:onClick="resetAll"
         android:text="@string/clearAll_button"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextHeightLayout"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/editTextHeightLayout"
         app:layout_constraintTop_toBottomOf="@+id/editTextHeightLayout" />
 
@@ -152,16 +175,5 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/viewButton"
-        android:layout_width="@+id/createButton"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:enabled="false"
-        android:text="@string/view_button"
-        app:layout_constraintEnd_toEndOf="@+id/createButton"
-        app:layout_constraintStart_toStartOf="@+id/createButton"
-        app:layout_constraintTop_toBottomOf="@+id/createButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,14 +10,12 @@ import java.io.File;
 
 public class ViewActivity extends AppCompatActivity {
 
-    PDFView pdfView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-        pdfView = findViewById(R.id.pdfView);
+        PDFView pdfView = findViewById(R.id.pdfView);
 
         String filename = getIntent().getStringExtra("filename");
 

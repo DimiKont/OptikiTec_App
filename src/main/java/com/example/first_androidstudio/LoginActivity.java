@@ -1,6 +1,7 @@
 package com.example.first_androidstudio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,14 +24,16 @@ import java.net.SocketException;
 
 public class LoginActivity extends AppCompatActivity
 {
+    // Username and password text fields and the login button
     private EditText editTextUsername;
     private EditText editTextPassword;
+    private Button button;
 
+    // Username and password strings to get the values from the text fields
+    // and the response string to get the response from the server about the credentials
     private String username;
     private String password;
-
     private String response;
-    private Button button;
 
     /**
      * Called when the activity is starting.  This is where most initialization
@@ -44,39 +47,37 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize text fields
-        // MHN VALEIS TO LAYOUT ID STA FINDVIEWBYID
-        // VALE TA TEXT FIELDS
+        SharedPreferences sharedPreferences = getSharedPreferences("nightModePrefs", MODE_PRIVATE);
+        boolean nightMode = sharedPreferences.getBoolean("nightMode", false);
+
+        if(nightMode)
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        // Initialize UI elements
         editTextUsername = findViewById(R.id.usernameEditText);
         editTextPassword = findViewById(R.id.passwordEditText);
+        button = findViewById(R.id.loginButton);
 
         // Add text fields to text watcher listener
         editTextUsername.addTextChangedListener(textWatcher);
         editTextPassword.addTextChangedListener(textWatcher);
 
-        // Initialize button
-        button = findViewById(R.id.loginButton);
-
-
         // Set button listener to change activity
-//        button.setOnClickListener(view -> openMainActivity());
+        // button.setOnClickListener(view -> openMainActivity());
         // The code below is the same as the code above
-        button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                sendData(view);
-            }
-        });
+        button.setOnClickListener(this::sendData);
     }
 
     private final TextWatcher textWatcher = new TextWatcher()
     {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         // Overridden method to enable/disable button based on text field input
         @Override
@@ -89,9 +90,7 @@ public class LoginActivity extends AppCompatActivity
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
+        public void afterTextChanged(Editable editable) {}
     };
 
     /**
@@ -104,7 +103,6 @@ public class LoginActivity extends AppCompatActivity
         socketClient.execute(username, password);
     }
 
-    // AAAAAAAAAAAAAAAAAAAAAA
     // You have to adjust AsyncTask<String, Void, String> to your needs. So if we want the 3rd parameter to return a String like in this example,
     // we have to change the 3rd parameter to String.
 
@@ -125,35 +123,31 @@ public class LoginActivity extends AppCompatActivity
                 Socket socket = new Socket("10.0.2.2", 30000);
 
                 BufferedWriter output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
                 output.write(strings[0] + "\n");
                 output.write(strings[1] + "\n");
                 output.flush();
 
-                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 response = input.readLine();
 
                 output.close();
                 input.close();
 
                 // IMPORTANT: Close the socket after you are done with it.
-                socket.close();
-
+//                socket.close();
             }
             catch (IOException e)
             {
                 e.printStackTrace();
-
             }
 
             return response;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-//            if(errorMessage != null)
-//            {
-//                Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-//            }
+        protected void onPostExecute(String result)
+        {
             if (result != null && result.equals("true"))
             {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
