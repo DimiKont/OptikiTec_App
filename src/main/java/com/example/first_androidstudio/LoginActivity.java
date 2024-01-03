@@ -51,13 +51,9 @@ public class LoginActivity extends AppCompatActivity
         boolean nightMode = sharedPreferences.getBoolean("nightMode", false);
 
         if(nightMode)
-        {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
         else
-        {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
 
         // Initialize UI elements
         editTextUsername = findViewById(R.id.usernameEditText);
